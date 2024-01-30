@@ -5,6 +5,7 @@ local default_config = {
     excluded_filetypes = nil,
     excluded_buftypes = { 'help', 'nofile', 'terminal', 'prompt' },
     match_priority = -1,
+    format_on_save = true,
     deep_nesting = {
         highlight = true,
         highlight_group = 'DiffDelete',
@@ -220,10 +221,12 @@ function strict.setup(user_config)
         group = strict_augroup,
         callback = function() highlight(config) end
     })
-    vim.api.nvim_create_autocmd('BufWritePre', {
-        group = strict_augroup,
-        callback = function() format(config) end
-    })
+    if config.format_on_save then
+      vim.api.nvim_create_autocmd('BufWritePre', {
+          group = strict_augroup,
+          callback = function() format(config) end
+      })
+    end
 end
 
 return strict
