@@ -160,8 +160,8 @@ local function format(config)
 end
 
 local function highlight(config)
-    vim.fn.clearmatches()
     if not is_valid_buffer(config) then return end
+    vim.fn.clearmatches()
     if vim.bo.textwidth == 0 then
         vim.bo.textwidth = config.overlong_lines.length_limit
     end
