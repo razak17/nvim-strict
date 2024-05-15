@@ -159,9 +159,27 @@ local function format(config)
     end
 end
 
+local function clear_highlights(config)
+    -- vim.fn.clearmatches()
+    local highlights = {
+        config.deep_nesting.highlight_group,
+        config.overlong_lines.highlight_group,
+        config.trailing_whitespace.highlight_group,
+        config.trailing_empty_lines.highlight_group,
+        config.space_indentation.highlight_group,
+        config.tab_indentation.highlight_group,
+        config.todos.highlight_group
+    }
+    for _, match in ipairs(vim.fn.getmatches()) do
+        if contains(highlights, match.group) then
+            vim.fn.matchdelete(match.id)
+        end
+    end
+end
+
 local function highlight(config)
     if not is_valid_buffer(config) then return end
-    vim.fn.clearmatches()
+    clear_highlights(config)
     if vim.bo.textwidth == 0 then
         vim.bo.textwidth = config.overlong_lines.length_limit
     end
