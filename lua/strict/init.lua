@@ -178,8 +178,8 @@ local function clear_highlights(config)
 end
 
 local function highlight(config)
-    if not is_valid_buffer(config) then return end
     clear_highlights(config)
+    if not is_valid_buffer(config) then return end
     if vim.bo.textwidth == 0 then
         vim.bo.textwidth = config.overlong_lines.length_limit
     end
